@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>RegistrationForm To-Do List</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="css/style.css">
+		
+		
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		
+	</head>
+
+	<body>
+
+		<div class="wrapper">
+			<div class="inner">
+				<div class="image-holder">
+					<img src="images/login.jpg" alt="">
+				</div>
+				<div>
+				<form action="" class="frmPnl">
+					<h3>To-Do List Login</h3>
+					
+					<div class="form-holder active">
+						<input type="text" id="email" placeholder="e-mail" class="form-control" required>
+				
+				</div>
+			<div class="form-holder">
+						<input id="password" type="password" placeholder="Password" class="form-control" style="font-size: 15px;" required>
+			</div>
+			
+			</form>
+			
+					<div class="form-login">
+						<button onclick="login()">Login</button>
+						<button onclick="document.location = 'signUp.html' ">Sign Up</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	
+		
+		
+		  <script>
+		  
+		     $(document).ready(function() {
+			 });
+                function login() {
+                    var email = document.getElementById("email").value;
+                    var password = document.getElementById("password").value;
+                    var url = "http://localhost:9090/users/" + email + "/find/" + password;
+				
+axios.get(url)
+  .then(function (response) {
+    // handle success
+	 localStorage.setItem("email", response.data.email);
+	 localStorage.setItem("name", response.data.name);
+	 localStorage.setItem("surname", response.data.surname);
+	 localStorage.setItem("id", response.data.id);
+
+	 document.location = "todolist.html";
+  })
+  .catch(function (error) {
+    // handle error
+	alert("Kullanıcı Adı veya Şifre Yanlış");
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });         
+                }
+            </script>
+
+	</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+   	<meta charset="utf-8">
+		<title>RegistrationForm To-Do List</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="css/style.css">
+		
+		
+		<script src="js/jquery-3.3.1.min.js"></script>
+		<script src="js/main.js"></script>
+   
+</head>
+
+<body>
+
+
+
+	<div class="wrapper">
+			<div class="inner">
+				<div class="image-holder-register">
+					<img src="images/register.jpg" alt="">
+				</div>
+				 <div>
+				<form id="frmsingup" action="" class="frmPnl">
+					<h3>To-Do List Register</h3>
+					
+					<div class="form-holder">
+						<input type="text" id="userName" placeholder="User Name" class="form-control">
+						</div>
+						
+						
+					<div class="form-holder">
+						<input type="text" id="userSurname" placeholder="User Surname" class="form-control">
+					</div>
+					
+					
+					
+					<div class="form-holder">
+						<input type="text" id="email" placeholder="e-mail" class="form-control">
+					</div>
+					<div class="form-holder">
+						<input id="password" type="password" placeholder="Password" class="form-control" style="font-size: 15px;">
+					</div>
+					
+			        <div class="form-holder">			
+						<input id="confirm_password" type="password" placeholder="Confirm Password" class="form-control" style="font-size: 15px;">
+						<span id="message"></span>
+					</div>
+					 
+				
+					
+					
+				</form>
+				
+				<div class="form-login">
+						 <button onclick="signup()">Sign Up</button>
+                         <button onclick="document.location = 'index.html'">Login</button>
+					</div>
+				</div>
+				
+					
+				</div>
+			
+		</div>
+
+
+		
+		
+        <div>
+            <script>
+			
+$('#password, #confirm_password').on('keyup', function () {
+  if ($('#password').val() == $('#confirm_password').val()) {
+    $('#message').html('Matching').css('color', 'green');
+
+  } else 
+    $('#message').html('Not Matching').css('color', 'red');
+});
+			
+                function signup() {
+
+                    var targeturl = "http://localhost:9090/users/register";
+                    var data = $('#frmsingup').serialize().split("&");
+					
+                    var obj = {};
+                    for (var key in data) {
+                        obj[data[key].split("=")[0]] = data[key].split("=")[1];
+                    }
+
+                    obj = {
+                        email: document.getElementById("email").value,
+                        name: document.getElementById("userName").value,
+						surname: document.getElementById("userSurname").value,
+                        password: document.getElementById("password").value,
+                    };
+					
+
+                    $.ajax({
+                        url: targeturl,
+                        type: "POST",
+                        data: JSON.stringify(obj).replace("%40", "@"),
+                        crossDomain: true,
+                        contentType: 'application/json; charset=utf-8',
+                        success: function(resultData) {
+                            if (resultData === null) {
+                                alert("Hata Oluştu");
+                            } else {
+                                if (confirm('Kayıt Gerçekleşti Giriş Sayfasına gidiniz.')) {
+                                    document.location = 'index.html'
+                                } else {
+                                    document.getElementById("frmsingup").reset();
+
+                                }
+
+                            }
+                        },
+                        error: function() {
+                            alert("Hata Oluştu");
+                        }
+                    });
+                }
+            </script>
+</body>
+
+</html>
